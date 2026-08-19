@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Green Transition Is Now a Capital Allocation Problem — H Heuristics</title>
+<meta name="description" content="A digital report on the global green transition: investment, cost deflation, power systems, policy, minerals, risks, and the 2030 outlook.">
+<style>
+  :root{
+    --ink:#16211b;
+    --ink-soft:#33433a;
+    --green:#0b3527;
+    --green-2:#14532d;
+    --green-3:#1d6a4f;
+    --gold:#b98a2f;
+    --gold-soft:#d8b45a;
+    --paper:#fbfaf6;
+    --paper-2:#f3f0e8;
+    --paper-3:#ece8dd;
+    --line:#ddd7c9;
+    --line-dark:#c9c2b0;
+    --muted:#5f6b63;
+    --chart-gray:#8b938c;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --serif:"Charter","Iowan Old Style",Georgia,"Times New Roman",serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .reveal{opacity:1 !important;transform:none !important}
+  }
+  body{
+    font-family:var(--serif);
+    color:var(--ink);
+    background:var(--paper);
+    line-height:1.65;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:#0b3527;color:#fbfaf6}
+
+  /* progress bar */
+  #progress{
+    position:fixed;top:0;left:0;height:3px;width:0;
+    background:var(--gold);z-index:1001;transition:width .1s linear;
+  }
+
+  /* masthead */
+  .masthead{
+    position:sticky;top:0;z-index:1000;
+    background:rgba(251,250,246,.96);
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(8px);
+  }
+  .masthead-inner{
+    max-width:1160px;margin:0 auto;padding:14px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .brand{
+    font-family:var(--sans);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--green);font-weight:700;white-space:nowrap;
+  }
+  .brand span{color:var(--gold)}
+  .nav{
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .nav::-webkit-scrollbar{display:none}
+  .nav a{
+    font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--ink-soft);text-decoration:none;padding:6px 9px;border-radius:3px;white-space:nowrap;
+  }
+  .nav a:hover{color:var(--green);background:var(--paper-3)}
+  .nav a.active{color:var(--green);font-weight:700}
+
+  /* hero */
+  .hero{
+    background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(217,180,90,.14), transparent 60%),
+      linear-gradient(160deg,#0b3527 0%,#0a2b20 55%,#071f17 100%);
+    color:#f4f1e8;
+    padding:96px 24px 120px;
+    position:relative;
+    border-bottom:1px solid #0a2b20;
+  }
+  .hero::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(217,180,90,.5),transparent);
+  }
+  .hero-inner{max-width:1160px;margin:0 auto}
+  .eyebrow{
+    font-family:var(--sans);font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--gold-soft);margin-bottom:22px;display:flex;align-items:center;gap:14px;
+  }
+  .eyebrow::before{content:"";width:42px;height:1px;background:var(--gold-soft)}
+  .hero h1{
+    font-family:var(--serif);font-weight:400;
+    font-size:clamp(38px,6.2vw,72px);
+    line-height:1.05;
+    letter-spacing:-.015em;
+    max-width:950px;
+    margin-bottom:28px;
+  }
+  .hero h1 em{font-style:italic;color:var(--gold-soft)}
+  .deck{
+    font-family:var(--sans);font-size:clamp(16px,2vw,19px);line-height:1.6;
+    color:#d8d4c6;max-width:720px;margin-bottom:38px;font-weight:400;
+  }
+  .hero-meta{
+    font-family:var(--sans);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    color:#9fb0a4;display:flex;flex-wrap:wrap;gap:10px 26px;
+  }
+  .hero-meta b{color:#e9e5d6;font-weight:600}
+
+  /* KPI band */
+  .kpi-band{
+    max-width:1160px;margin:-64px auto 0;padding:0 24px;position:relative;z-index:2;
+    display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);box-shadow:0 24px 60px rgba(11,53,39,.12);
+  }
+  .kpi{
+    background:var(--paper);padding:22px 18px 20px;
+  }
+  .kpi .value{
+    font-family:var(--sans);font-size:clamp(22px,2.4vw,30px);font-weight:700;color:var(--green);
+    letter-spacing:-.02em;line-height:1.1;margin-bottom:8px;
+  }
+  .kpi .label{
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--muted);line-height:1.45;
+  }
+  @media (max-width:1000px){
+    .kpi-band{grid-template-columns:repeat(3,1fr)}
+  }
+  @media (max-width:560px){
+    .kpi-band{grid-template-columns:repeat(2,1fr)}
+  }
+
+  /* sections */
+  section{max-width:1160px;margin:0 auto;padding:88px 24px 0}
+  .sec-head{
+    display:grid;grid-template-columns:200px 1fr;gap:32px;
+    border-bottom:1px solid var(--line-dark);padding-bottom:28px;margin-bottom:36px;
+  }
+  .sec-num{
+    font-family:var(--sans);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--gold);padding-top:10px;
+  }
+  .sec-head h2{
+    font-size:clamp(27px,3.6vw,40px);font-weight:400;line-height:1.12;letter-spacing:-.01em;
+  }
+  .sec-head h2 em{font-style:italic;color:var(--green-3)}
+  .lead{
+    font-size:20px;line-height:1.55;color:var(--ink-soft);margin:0 0 22px;max-width:820px;
+  }
+  .prose p{margin-bottom:20px;max-width:820px}
+  .prose p strong{font-weight:600}
+  .prose a,.source-list a{color:var(--green-2);text-decoration:underline;text-decoration-color:#a9bfae;text-underline-offset:2px}
+  .prose a:hover,.source-list a:hover{text-decoration-color:var(--green-2)}
+  .dropcap::first-letter{
+    font-size:3.4em;float:left;line-height:.82;padding-right:10px;padding-top:4px;
+    color:var(--green);font-style:italic;
+  }
+
+  /* chart cards */
+  .chart-row{
+    display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:34px 0 8px;
+  }
+  .chart-card{
+    background:#fff;border:1px solid var(--line);padding:22px 22px 16px;
+    box-shadow:0 1px 0 rgba(11,53,39,.04);
+  }
+  .chart-card.full{grid-column:1/-1}
+  .chart-card .cap{
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:6px;
+  }
+  .chart-card h3{
+    font-size:19px;font-weight:400;line-height:1.3;margin-bottom:4px;
+  }
+  .chart-card .sub{font-family:var(--sans);font-size:12.5px;color:var(--muted);margin-bottom:14px}
+  .chart-box{position:relative;height:300px}
+  .chart-box.tall{height:360px}
+  .chart-note{
+    font-family:var(--sans);font-size:11px;color:var(--muted);
+    border-top:1px solid var(--paper-3);margin-top:12px;padding-top:10px;line-height:1.5;
+  }
+  @media (max-width:900px){.chart-row{grid-template-columns:1fr}}
+
+  /* takeaway */
+  .takeaway{
+    margin:34px 0 0;padding:22px 26px;
+    border-left:4px solid var(--gold);
+    background:var(--paper-2);
+    max-width:820px;
+  }
+  .takeaway .t-label{
+    font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:8px;font-weight:700;
+  }
+  .takeaway p{font-size:18px;line-height:1.55;margin:0;font-style:italic;color:var(--ink-soft)}
+
+  /* insight grid */
+  .insights{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);margin:34px 0 0;
+  }
+  .insight{background:#fff;padding:22px}
+  .insight .i-num{
+    font-family:var(--sans);font-size:11px;letter-spacing:.14em;color:var(--gold);
+    font-weight:700;margin-bottom:10px;
+  }
+  .insight h4{font-size:17px;font-weight:600;margin-bottom:8px;line-height:1.35}
+  .insight p{font-family:var(--sans);font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+  @media (max-width:900px){.insights{grid-template-columns:1fr}}
+
+  /* tables */
+  .table-wrap{overflow-x:auto;margin:34px 0 0;border:1px solid var(--line);background:#fff}
+  table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13.5px;min-width:760px}
+  thead th{
+    text-align:left;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;padding:13px 16px;border-bottom:1px solid var(--line-dark);
+    background:var(--paper-2);white-space:nowrap;
+  }
+  tbody td{padding:13px 16px;border-bottom:1px solid var(--paper-3);vertical-align:top;line-height:1.5}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover td{background:#faf9f4}
+  td .region{font-weight:600;color:var(--green);white-space:nowrap}
+  .flag{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  .f-cn{background:#c0392b}.f-eu{background:#1d4ed8}.f-us{background:#1e3a5f}.f-in{background:#e07b2f}.f-gs{background:#7c8a80}
+
+  /* binding term */
+  .binding{
+    margin:44px 0 0;padding:34px 34px;
+    background:var(--green);color:#f2efe4;
+    max-width:820px;position:relative;
+  }
+  .binding::before{
+    content:"Binding term";display:block;font-family:var(--sans);font-size:10.5px;
+    letter-spacing:.22em;text-transform:uppercase;color:var(--gold-soft);margin-bottom:14px;font-weight:700;
+  }
+  .binding p{font-size:20px;line-height:1.5;margin:0;font-style:italic}
+
+  /* sources */
+  .source-list{columns:2;column-gap:48px;margin-top:26px}
+  .source-list li{
+    list-style:none;margin-bottom:14px;font-family:var(--sans);font-size:13px;color:var(--ink-soft);
+    line-height:1.5;padding-left:18px;position:relative;break-inside:avoid;
+  }
+  .source-list li::before{content:"—";position:absolute;left:0;color:var(--gold)}
+  @media (max-width:760px){.source-list{columns:1}}
+
+  /* footer */
+  footer{
+    margin-top:100px;background:var(--green);color:#c9d2cb;padding:44px 24px 52px;
+    border-top:3px solid var(--gold);
+  }
+  .foot-inner{max-width:1160px;margin:0 auto;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+  .foot-brand{font-family:var(--sans);font-size:12px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#f2efe4}
+  .foot-brand span{color:var(--gold-soft)}
+  .foot-inner p{font-family:var(--sans);font-size:12px;line-height:1.7;color:#9fb0a4;max-width:560px}
+  .foot-inner a{color:#d8b45a;text-decoration:none}
+  .foot-inner a:hover{text-decoration:underline}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  #backtop{
+    position:fixed;right:22px;bottom:22px;z-index:900;
+    font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+    background:var(--green);color:#f2efe4;text-decoration:none;padding:10px 14px;border-radius:3px;
+    opacity:0;pointer-events:none;transition:opacity .3s ease;
+  }
+  #backtop.show{opacity:1;pointer-events:auto}
+
+  @media print{
+    .masthead,#progress,#backtop{display:none}
+    body{background:#fff;font-size:12px}
+    section{padding-top:24px}
+  }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">H <span>Heuristics</span></div>
+    <nav class="nav" aria-label="Report sections">
+      <a href="#summary">Summary</a>
+      <a href="#investment">Investment</a>
+      <a href="#cost">Technology</a>
+      <a href="#power">Power</a>
+      <a href="#policy">Policy</a>
+      <a href="#minerals">Minerals</a>
+      <a href="#risks">Counter-case</a>
+      <a href="#scoreboard">Scoreboard</a>
+      <a href="#outlook">Outlook</a>
+      <a href="#sources">Sources</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Global Energy Transition Report · 2025</div>
+    <h1>The green transition is now a <em>capital allocation</em> problem</h1>
+    <p class="deck">The technology race is won. Cost deflation in solar, batteries, and electric vehicles has shifted the binding constraint from invention to allocation — where capital goes, how fast grids get built, and who controls mineral processing.</p>
+    <div class="hero-meta">
+      <span>Prepared by <b>H Heuristics</b></span>
+      <span>Built with <b>Veles · Fable-5</b></span>
+      <span>Reading time <b>~14 minutes</b></span>
+    </div>
+  </div>
+</div>
+
+<div class="kpi-band">
+  <div class="kpi"><div class="value">$2.0T</div><div class="label">Clean energy investment, 2025 (IEA)</div></div>
+  <div class="kpi"><div class="value">32%</div><div class="label">Renewables share of global electricity, 2024 (Ember)</div></div>
+  <div class="kpi"><div class="value">−90%</div><div class="label">Utility-scale solar LCOE decline since 2010 (IRENA)</div></div>
+  <div class="kpi"><div class="value">17M+</div><div class="label">Electric cars sold worldwide, 2024 (IEA)</div></div>
+  <div class="kpi"><div class="value">$115</div><div class="label">Battery pack price per kWh, 2024 (BNEF)</div></div>
+  <div class="kpi"><div class="value">37.8 Gt</div><div class="label">Energy-related CO₂ emissions, 2024 (IEA)</div></div>
+</div>
+
+<main>
+
+<!-- 01 SUMMARY -->
+<section id="summary" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">01 · Summary</div>
+    <h2>The transition has cleared the technology hurdle and hit the capital hurdle</h2>
+  </div>
+  <div class="prose">
+    <p class="lead dropcap">The green transition no longer waits on invention. It waits on allocation.</p>
+    <p>Clean energy investment passed $2 trillion in 2025, roughly two-thirds of a record $3.2 trillion in total energy spending, according to the <a href="https://www.iea.org/reports/world-energy-investment-2025" target="_blank" rel="noopener">IEA World Energy Investment 2025</a>. Renewables supplied 32% of global electricity in 2024, per <a href="https://ember-energy.org/latest-insights/global-electricity-review-2025/" target="_blank" rel="noopener">Ember's Global Electricity Review</a>. Utility-scale solar costs have fallen roughly 90% since 2010, per <a href="https://www.irena.org/Publications/2024/Sep/Renewable-Power-Generation-Costs-in-2023" target="_blank" rel="noopener">IRENA</a>. These figures describe a technology race that has largely been won.</p>
+    <p>The binding constraints have moved. Grid connection queues stretch years in Europe and the United States. Battery-grade mineral processing remains concentrated in a handful of countries. Policy support has grown, but it increasingly chases investment that moves on cost alone. A transition once gated by whether clean technology existed is now gated by capital allocation, infrastructure build-out, and supply-chain politics.</p>
+    <p>This report reads the evidence through that lens: investment flows, cost deflation, power systems, policy architecture, mineral chokepoints, the strongest counter-case, a regional scoreboard, and an outlook to 2030.</p>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>The green transition is no longer a technology story. It is a capital-allocation story with energy-security overtones.</p>
+  </div>
+</section>
+
+<!-- 02 INVESTMENT -->
+<section id="investment" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">02 · Capital</div>
+    <h2>Clean investment has passed $2 trillion while fossil investment has <em>stopped growing</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">The IEA expects world energy investment to exceed $3.2 trillion in 2025 for the first time. Roughly $2 trillion of it flows to clean energy.</p>
+    <p>That clean share covers renewables, grids, storage, nuclear, electric vehicles, and efficiency — up from about $1 trillion a decade ago. Fossil fuel investment has stayed near $1 trillion. The clean-to-fossil ratio has flipped from roughly 1:1 in 2015 to nearly 2:1 in 2025. The transition is no longer a niche spend inside the energy sector; it is the sector's main growth line.</p>
+    <p>Cost declines drive this. Each dollar now buys more watts, more storage, and more vehicle miles than it bought five years ago, so a flat or rising investment line delivers an accelerating volume of clean capacity. The same arithmetic works in reverse for the counter-case: where capital is expensive, the transition stalls even though the technology is cheap.</p>
+    <p>Investment remains uneven. China accounts for roughly a third of global clean energy investment. Emerging markets outside China receive about 15%, despite housing most of the world's future energy demand growth. That gap is the single largest fault line in the transition's next phase.</p>
+  </div>
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="cap">Figure 1</div>
+      <h3>Global energy investment by category, 2015–2025</h3>
+      <div class="sub">Clean energy investment has decoupled from fossil investment. USD trillion, rounded.</div>
+      <div class="chart-box tall"><canvas id="invChart" role="img" aria-label="Bar chart of clean versus fossil energy investment, 2015 to 2025, showing clean investment rising from about one trillion to two trillion dollars while fossil investment stays near one trillion."></canvas></div>
+      <div class="chart-note">Source: IEA World Energy Investment 2025. Values rounded; clean includes renewables, grids, storage, nuclear, EVs, and efficiency.</div>
+    </div>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>Watch the clean-to-fossil investment ratio, not the headline total. The transition advances when the ratio rises faster than the total.</p>
+  </div>
+</section>
+
+<!-- 03 COST / TECHNOLOGY -->
+<section id="cost" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">03 · Technology</div>
+    <h2>Cost deflation turned green technology into an <em>industrial export</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">IRENA puts the global weighted-average levelized cost of utility-scale solar at $0.044 per kilowatt-hour in 2023, down from $0.378 in 2010.</p>
+    <p>Onshore wind fell from $0.089 to $0.033 per kilowatt-hour over the same period. In most markets, new solar is now the cheapest source of new electricity on a levelized basis — cheaper than new coal or gas before any subsidy. Battery pack prices dropped 20% in 2024 alone, to $115 per kilowatt-hour, per <a href="https://about.bnef.com/blog/battery-pack-prices-continue-to-drop/" target="_blank" rel="noopener">BloombergNEF</a>, and several Chinese cell makers already sell below $60.</p>
+    <p>Cheap capital equipment has consequences. The <a href="https://www.iea.org/reports/global-ev-outlook-2025" target="_blank" rel="noopener">IEA Global EV Outlook 2025</a> counts more than 17 million electric cars sold in 2024, over 20% of global sales; in China, new energy vehicles were roughly half of new car sales. Manufacturing followed the market. China hosts roughly 80% of solar module manufacturing and about three-quarters of global battery cell capacity, per <a href="https://www.iea.org/reports/energy-technology-perspectives-2024" target="_blank" rel="noopener">IEA Energy Technology Perspectives 2024</a>.</p>
+    <p>The strategic implication: the transition is now an export industry. Countries that build the equipment capture the value even when other countries install it. Cost leadership, not climate ambition, now determines who leads.</p>
+  </div>
+  <div class="chart-row">
+    <div class="chart-card">
+      <div class="cap">Figure 2</div>
+      <h3>Levelized cost of electricity, 2010–2023</h3>
+      <div class="sub">Global weighted average, USD per MWh (IRENA).</div>
+      <div class="chart-box"><canvas id="lcoeChart" role="img" aria-label="Line chart showing utility-scale solar falling from 378 to 44 dollars per megawatt-hour between 2010 and 2023, with onshore and offshore wind also declining."></canvas></div>
+      <div class="chart-note">Source: IRENA, Renewable Power Generation Costs in 2023.</div>
+    </div>
+    <div class="chart-card">
+      <div class="cap">Figure 3</div>
+      <h3>Clean-technology manufacturing capacity by region</h3>
+      <div class="sub">Share of global manufacturing capacity, 2024 estimates (IEA).</div>
+      <div class="chart-box"><canvas id="mfgChart" role="img" aria-label="Horizontal stacked bar chart showing China's dominant share of global manufacturing capacity for solar modules, batteries, electrolyzers, heat pumps, and wind nacelles."></canvas></div>
+      <div class="chart-note">Source: IEA Energy Technology Perspectives 2024 and IEA 2025 updates.</div>
+    </div>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>Cheap capital equipment made the transition an export industry. The countries that build the equipment capture the value, even when other countries install it.</p>
+  </div>
+</section>
+
+<!-- 04 POWER -->
+<section id="power" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">04 · Power systems</div>
+    <h2>Power is the platform, and the grid is the <em>bottleneck</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">Electricity is the fastest route to decarbonization. Renewables reached 32% of global generation in 2024, and solar added more new generation than any other single source for the third consecutive year.</p>
+    <p>Wind and solar together supplied about 15% of global electricity in 2024, up from under 1% in 2000, per <a href="https://ember-energy.org/latest-insights/global-electricity-review-2025/" target="_blank" rel="noopener">Ember</a>. The IEA expects renewables to overtake coal as the largest source of global electricity in the late 2020s. Electrification then compounds the shift: electric vehicles, heat pumps, and industrial electrification move demand from fuels to the grid.</p>
+    <p>The constraint is no longer generation. It is grids and flexibility. Grid investment will approach half a trillion dollars in 2025, per the IEA, yet connection queues in the United States and Europe stretch years, and some queued projects wait a decade. Storage is scaling fast: battery storage additions grew roughly 60% in 2024. But storage and interconnection now set the pace of renewables integration. Where grids build slowly, cheap renewables wait.</p>
+  </div>
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="cap">Figure 4</div>
+      <h3>Global electricity generation mix, 2000–2030</h3>
+      <div class="sub">Share of generation by source; 2030 shown on announced policy settings.</div>
+      <div class="chart-box tall"><canvas id="mixChart" role="img" aria-label="Stacked area chart of the global electricity mix from 2000 to 2030, showing coal and gas still dominant but wind and solar rising to roughly a quarter of generation."></canvas></div>
+      <div class="chart-note">Historical: Ember Global Electricity Review 2025. 2030: IEA stated-policies trajectory, rounded.</div>
+    </div>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>Grid capacity is the new drilling rate. Where interconnection, permitting, and storage scale, renewables scale; where they lag, cheap electrons wait in queues.</p>
+  </div>
+</section>
+
+<!-- 05 POLICY -->
+<section id="policy" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">05 · Policy</div>
+    <h2>Policy is racing to keep up with markets, and markets are <em>racing ahead</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">The policy architecture has shifted from subsidizing clean energy to industrial strategy and border measures.</p>
+    <p>The US <a href="https://home.treasury.gov/policy-issues/inflation-reduction-act" target="_blank" rel="noopener">Inflation Reduction Act</a> has unlocked more than $500 billion in announced clean manufacturing and deployment investment since 2022. The European Union's <a href="https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en" target="_blank" rel="noopener">Carbon Border Adjustment Mechanism</a> enters its definitive regime in 2026, pricing embodied carbon at the border. China's industrial policy compressed clean-technology costs globally while concentrating manufacturing at home. India runs production-linked incentives for solar modules and batteries.</p>
+    <p>The pattern is competition, not coordination. Governments compete for supply chains more than they cooperate on emissions. EV tariffs, solar anti-dumping duties, and local-content rules raise costs and redistribute manufacturing, but they do not slow the underlying cost curve. Policy now follows markets more often than it leads them.</p>
+  </div>
+  <div class="insights">
+    <div class="insight">
+      <div class="i-num">US · IRA</div>
+      <h4>Demand-side credits with industrial strings</h4>
+      <p>Uncapped tax credits pulled in more than $500 billion of announced investment; local-content and domestic-manufacturing bonuses steer the supply chain home.</p>
+    </div>
+    <div class="insight">
+      <div class="i-num">EU · CBAM + ETS</div>
+      <h4>Carbon pricing at the border</h4>
+      <p>The Emissions Trading System prices domestic carbon; CBAM extends the price to imports of steel, cement, aluminium, fertilizers, and electricity from 2026.</p>
+    </div>
+    <div class="insight">
+      <div class="i-num">CN · Industrial policy</div>
+      <h4>Scale at the cost of overcapacity</h4>
+      <p>State-backed capacity expansion drove module and cell prices down globally while creating overcapacity and trade friction that now defines the policy debate.</p>
+    </div>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>Policy has become an industrial-competition tool. Read each new measure as a supply-chain bid first and a climate measure second.</p>
+  </div>
+</section>
+
+<!-- 06 MINERALS -->
+<section id="minerals" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">06 · Supply chains</div>
+    <h2>The mineral chokepoint defines the new <em>geopolitics</em> of energy</h2>
+  </div>
+  <div class="prose">
+    <p class="lead">A clean energy system is a mineral-intensive one. An electric car uses about six times the mineral inputs of a conventional car; an onshore wind plant uses about nine times the mineral inputs of a gas-fired plant per megawatt.</p>
+    <p>Processing matters more than mining. China refines the large majority of battery-grade lithium, cobalt, and nickel, and an even larger share of graphite and rare earths, per the <a href="https://www.iea.org/reports/global-critical-minerals-outlook-2024" target="_blank" rel="noopener">IEA Global Critical Minerals Outlook 2024</a>. The chokepoint sits in refining capacity, not ore reserves.</p>
+    <p>Prices swing accordingly. Lithium spiked in 2022 and collapsed in 2023–2024; the same pattern now plays out in cobalt and nickel. Concentration converts price cycles into political exposure. Diversification is underway through the US 45X credit, the EU Critical Raw Materials Act, and new refining capacity in Australia and Indonesia. It remains years from meaningful scale.</p>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>Read mineral processing as the energy-security variable of the transition. Refining capacity, not mine output, is where the chokepoint sits.</p>
+  </div>
+</section>
+
+<!-- 07 COUNTER-CASE -->
+<section id="risks" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">07 · Counter-case</div>
+    <h2>The strongest case against a fast transition is <em>affordability, not denial</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">The serious opposing read runs like this: cheap energy per megawatt-hour does not equal cheap energy per connection.</p>
+    <p>Grid build-out is slow in liberalized markets. High interest rates raise the upfront cost of capital-intensive projects. Emerging markets outside China face financing costs above 10% and receive only about 15% of global clean investment. Fossil demand has not peaked: oil, gas, and coal consumption all set records in 2024, per the <a href="https://www.energyinst.org/statistical-review" target="_blank" rel="noopener">Energy Institute Statistical Review</a>, and energy-related CO₂ emissions rose 0.8% to 37.8 gigatonnes, per the <a href="https://www.iea.org/reports/co2-emissions-in-2024" target="_blank" rel="noopener">IEA</a>. Affordability politics has slowed policy in parts of Europe and the United States.</p>
+    <p>This counter-case fails as a case for reversal. The cost curve has decoupled from policy: solar, batteries, and electric vehicles now compete on cost in most markets, so a policy retreat slows but does not stop adoption. It succeeds as a case for where the transition is fragile — grids, finance costs, and demand growth in emerging markets. A slowdown would concentrate precisely there.</p>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>The counter-case is not that clean energy will fail. It is that the transition will stall where capital is scarce.</p>
+  </div>
+</section>
+
+<!-- 08 SCOREBOARD -->
+<section id="scoreboard" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">08 · Regional scoreboard</div>
+    <h2>Four regions dominate the transition, and they are running <em>different races</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">The transition is global in aggregate and regional in mechanism. Each major bloc leads on a different axis — and binds on a different one.</p>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Region</th>
+          <th>Renewables share of electricity, 2024</th>
+          <th>EV share of new car sales, 2024</th>
+          <th>Clean energy investment, 2024 (approx.)</th>
+          <th>Policy anchor</th>
+          <th>Binding constraint</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="region"><span class="flag f-cn"></span>China</span></td>
+          <td>~31%</td>
+          <td>~48% (NEV)</td>
+          <td>~$700B</td>
+          <td>Industrial policy + national ETS</td>
+          <td>Overcapacity and trade friction</td>
+        </tr>
+        <tr>
+          <td><span class="region"><span class="flag f-eu"></span>European Union</span></td>
+          <td>~48%</td>
+          <td>~21%</td>
+          <td>~$390B</td>
+          <td>ETS + CBAM + CRMA</td>
+          <td>Grid queues and energy prices</td>
+        </tr>
+        <tr>
+          <td><span class="region"><span class="flag f-us"></span>United States</span></td>
+          <td>~23%</td>
+          <td>~10%</td>
+          <td>~$340B</td>
+          <td>Inflation Reduction Act</td>
+          <td>Permitting and policy uncertainty</td>
+        </tr>
+        <tr>
+          <td><span class="region"><span class="flag f-in"></span>India</span></td>
+          <td>~21%</td>
+          <td>~3% (cars)</td>
+          <td>~$70B</td>
+          <td>Production-linked incentives</td>
+          <td>Financing costs and grid build-out</td>
+        </tr>
+        <tr>
+          <td><span class="region"><span class="flag f-gs"></span>Global South ex-China</span></td>
+          <td>Varies, low base</td>
+          <td>&lt;2%</td>
+          <td>~15% of global total</td>
+          <td>Blended finance and MDBs</td>
+          <td>Cost of capital above 10%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="prose" style="margin-top:22px">
+    <p>China leads on manufacturing scale, Europe on carbon pricing, the United States on subsidy firepower, and India on growth from a low base. The Global South outside China receives the smallest share of investment and pays the highest price for it. Most future energy demand growth sits there.</p>
+  </div>
+  <div class="takeaway">
+    <div class="t-label">Takeaway</div>
+    <p>Do not read the transition as one race. It is four different races, and the fifth runner has not yet received its capital.</p>
+  </div>
+</section>
+
+<!-- 09 OUTLOOK -->
+<section id="outlook" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">09 · Outlook</div>
+    <h2>The decade's question is whether the transition scales <em>outside China</em></h2>
+  </div>
+  <div class="prose">
+    <p class="lead">Three indicators will matter more through 2030 than the emissions headline: the clean-to-fossil investment ratio outside China, grid and storage additions in the US, EU, and India, and mineral refining diversification.</p>
+    <p>Current policy settings leave 2030 energy-related emissions roughly flat with today, near 34 gigatonnes. A 1.5°C-consistent trajectory needs roughly 22 gigatonnes by 2030. That gap is not a technology gap; the equipment exists. It is an allocation gap, concentrated in grids, storage, and emerging-market finance.</p>
+    <p>An accelerated path is visible in the data: renewables above 40% of global electricity, electric vehicles above half of global car sales, storage and grid investment doubling, and blended finance that brings emerging-market capital costs down from double digits. A stalled path looks different: cheap generation waiting in queues, EV adoption plateauing in Europe and the US, and the Global South locked out by the cost of capital.</p>
+  </div>
+  <div class="chart-row">
+    <div class="chart-card full">
+      <div class="cap">Figure 5</div>
+      <h3>Energy-related CO₂ emissions and the 1.5°C corridor</h3>
+      <div class="sub">Historical emissions against current-policy and 1.5°C-consistent trajectories, gigatonnes.</div>
+      <div class="chart-box"><canvas id="emissChart" role="img" aria-label="Line chart showing historical energy emissions rising to 37.8 gigatonnes in 2024, staying near 34 gigatonnes by 2030 under current policy, versus a 1.5-degree corridor falling toward 22 gigatonnes."></canvas></div>
+      <div class="chart-note">Historical: IEA CO₂ Emissions in 2024. Trajectories: IEA World Energy Outlook stated-policies and net-zero-consistent paths, rounded.</div>
+    </div>
+  </div>
+  <div class="insights">
+    <div class="insight">
+      <div class="i-num">Watch 1</div>
+      <h4>Grid investment and queue clearance</h4>
+      <p>Interconnection and permitting are the highest-leverage policy variables. Where queues clear, renewables deploy within quarters, not decades.</p>
+    </div>
+    <div class="insight">
+      <div class="i-num">Watch 2</div>
+      <h4>Emerging-market cost of capital</h4>
+      <p>Blended finance, guarantees, and development-bank reform matter more than new technology. A two-point cut in WACC does more than a two-point gain in panel efficiency.</p>
+    </div>
+    <div class="insight">
+      <div class="i-num">Watch 3</div>
+      <h4>Mineral refining diversification</h4>
+      <p>New refining capacity outside China is the clearest signal that governments take the transition's energy-security dimension seriously.</p>
+    </div>
+  </div>
+  <div class="binding">
+    <p>Read every green-transition headline as a capital-allocation signal, not an emissions signal. The pace of the transition is now set by where money, grid capacity, and mineral processing can be built — not by what technology exists.</p>
+  </div>
+</section>
+
+<!-- SOURCES -->
+<section id="sources" class="reveal">
+  <div class="sec-head">
+    <div class="sec-num">Appendix</div>
+    <h2>Sources and methodology</h2>
+  </div>
+  <div class="prose">
+    <p class="lead">Figures are drawn from primary international datasets, rounded to the precision each source supports. Trajectories for 2030 reflect stated-policy scenarios, not forecasts of record.</p>
+  </div>
+  <ul class="source-list">
+    <li><a href="https://www.iea.org/reports/world-energy-investment-2025" target="_blank" rel="noopener">IEA, World Energy Investment 2025</a> — global investment by category.</li>
+    <li><a href="https://ember-energy.org/latest-insights/global-electricity-review-2025/" target="_blank" rel="noopener">Ember, Global Electricity Review 2025</a> — generation mix and renewables share.</li>
+    <li><a href="https://www.irena.org/Publications/2024/Sep/Renewable-Power-Generation-Costs-in-2023" target="_blank" rel="noopener">IRENA, Renewable Power Generation Costs in 2023</a> — levelized costs.</li>
+    <li><a href="https://www.iea.org/reports/global-ev-outlook-2025" target="_blank" rel="noopener">IEA, Global EV Outlook 2025</a> — electric vehicle sales and shares.</li>
+    <li><a href="https://about.bnef.com/blog/battery-pack-prices-continue-to-drop/" target="_blank" rel="noopener">BloombergNEF, Battery Price Survey 2024</a> — pack prices.</li>
+    <li><a href="https://www.iea.org/reports/energy-technology-perspectives-2024" target="_blank" rel="noopener">IEA, Energy Technology Perspectives 2024</a> — manufacturing capacity shares.</li>
+    <li><a href="https://www.iea.org/reports/global-critical-minerals-outlook-2024" target="_blank" rel="noopener">IEA, Global Critical Minerals Outlook 2024</a> — processing concentration.</li>
+    <li><a href="https://www.iea.org/reports/co2-emissions-in-2024" target="_blank" rel="noopener">IEA, CO₂ Emissions in 2024</a> — emissions totals.</li>
+    <li><a href="https://www.energyinst.org/statistical-review" target="_blank" rel="noopener">Energy Institute, Statistical Review of World Energy 2025</a> — fossil demand.</li>
+    <li><a href="https://taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism_en" target="_blank" rel="noopener">European Commission, CBAM</a> — border carbon mechanism.</li>
+    <li><a href="https://home.treasury.gov/policy-issues/inflation-reduction-act" target="_blank" rel="noopener">US Treasury, Inflation Reduction Act</a> — US clean investment policy.</li>
+    <li><a href="https://www.iea.org/reports/world-energy-outlook-2025" target="_blank" rel="noopener">IEA, World Energy Outlook 2025</a> — scenario trajectories.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">H <span>Heuristics</span></div>
+    <p>Green Transition Digital Report · 2025. Prepared by H Heuristics. Built with the Veles pipeline (Fable-5 × DeepSeek) and deployed via GitHub Pages. Figures are rounded estimates from cited primary sources and are not investment advice.</p>
+    <p><a href="#summary">Back to top ↑</a></p>
+  </div>
+</footer>
+
+<a href="#summary" id="backtop">Top ↑</a>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- shared ---------- */
+  var GREEN="#0b3527", GREEN2="#1d6a4f", GREEN3="#3f8f6b", GOLD="#b98a2f", GOLD2="#d8b45a",
+      GRAY="#8b938c", LIGHT="#e6e1d5", PAPER="#fbfaf6";
+  Chart.defaults.font.family = '-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = "#5f6b63";
+  if (window.innerWidth < 640) { Chart.defaults.font.size = 9; }
+
+  function grid(t){return {color:"rgba(11,53,39,.07)",borderDash:[3,4],drawTicks:false};}
+  function noLegend(){return {display:false};}
+
+  /* ---------- Fig 1: investment ---------- */
+  (function(){
+    var ctx = document.getElementById("invChart");
+    if (!ctx || typeof Chart === "undefined") return;
+    new Chart(ctx, {
+      type:"bar",
+      data:{
+        labels:["2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025e"],
+        datasets:[
+          {label:"Clean energy", data:[1.00,1.00,1.05,1.10,1.15,1.20,1.35,1.60,1.85,2.05,2.10], backgroundColor:GREEN2, borderRadius:2, maxBarThickness:26},
+          {label:"Fossil fuels", data:[1.10,1.05,1.05,1.05,1.10,1.05,1.10,1.10,1.10,1.10,1.10], backgroundColor:GRAY, borderRadius:2, maxBarThickness:26}
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:"top",labels:{boxWidth:12,boxHeight:12,usePointStyle:true,padding:16}}},
+        scales:{
+          x:{grid:{display:false},ticks:{color:"#5f6b63"}},
+          y:{grid:grid(),beginAtZero:true,max:2.5,ticks:{color:"#5f6b63",callback:function(v){return "$"+v+"T";}}}
+        }
+      }
+    });
+  })();
+
+  /* ---------- Fig 2: LCOE ---------- */
+  (function(){
+    var ctx = document.getElementById("lcoeChart");
+    if (!ctx || typeof Chart === "undefined") return;
+    new Chart(ctx, {
+      type:"line",
+      data:{
+        labels:["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023"],
+        datasets:[
+          {label:"Solar PV (utility)", data:[378,320,270,220,175,150,125,110,90,75,57,48,45,44], borderColor:GOLD, backgroundColor:GOLD2, borderWidth:2.5, pointRadius:0, pointHitRadius:8, tension:.3},
+          {label:"Onshore wind", data:[89,85,80,75,70,66,60,56,52,49,44,38,35,33], borderColor:GREEN2, backgroundColor:GREEN2, borderWidth:2.5, pointRadius:0, pointHitRadius:8, tension:.3},
+          {label:"Offshore wind", data:[162,160,155,150,142,135,128,120,112,108,95,88,80,75], borderColor:"#5b8a77", backgroundColor:"#5b8a77", borderWidth:2.5, pointRadius:0, pointHitRadius:8, tension:.3},
+          {label:"Concentrating solar", data:[392,380,360,340,310,290,270,250,230,210,190,160,135,117], borderColor:GRAY, backgroundColor:GRAY, borderWidth:2, borderDash:[5,4], pointRadius:0, pointHitRadius:8, tension:.3}
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:"top",labels:{boxWidth:12,boxHeight:12,usePointStyle:true,padding:14,font:{size:10}}}},
+        scales:{
+          x:{grid:{display:false},ticks:{color:"#5f6b63",maxRotation:0,autoSkip:true,maxTicksLimit:8}},
+          y:{grid:grid(),beginAtZero:true,ticks:{color:"#5f6b63",callback:function(v){return "$"+v;}}}
+        }
+      }
+    });
+  })();
+
+  /* ---------- Fig 3: manufacturing ---------- */
+  (function(){
+    var ctx = document.getElementById("mfgChart");
+    if (!ctx || typeof Chart === "undefined") return;
+    new Chart(ctx, {
+      type:"bar",
+      data:{
+        labels:["Solar modules","Battery cells","Electrolyzers","Heat pumps","Wind nacelles"],
+        datasets:[
+          {label:"China", data:[80,75,60,40,60], backgroundColor:GREEN, borderRadius:2, maxBarThickness:20},
+          {label:"EU", data:[3,8,20,20,25], backgroundColor:"#5b8a77", borderRadius:2, maxBarThickness:20},
+          {label:"US", data:[3,10,10,15,8], backgroundColor:GOLD, borderRadius:2, maxBarThickness:20},
+          {label:"Rest of world", data:[14,7,10,25,7], backgroundColor:LIGHT, borderRadius:2, maxBarThickness:20}
+        ]
+      },
+      options:{
+        indexAxis:"y", responsive:true, maintainAspectRatio:false,
+        plugins:{legend:{position:"top",labels:{boxWidth:12,boxHeight:12,usePointStyle:true,padding:14,font:{size:10}}}},
+        scales:{
+          x:{stacked:true,grid:grid(),beginAtZero:true,max:100,ticks:{color:"#5f6b63",callback:function(v){return v+"%";}}},
+          y:{stacked:true,grid:{display:false},ticks:{color:"#33433a",font:{size:11}}}
+        }
+      }
+    });
+  })();
+
+  /* ---------- Fig 4: electricity mix ---------- */
+  (function(){
+    var ctx = document.getElementById("mixChart");
+    if (!ctx || typeof Chart === "undefined") return;
+    new Chart(ctx, {
+      type:"line",
+      data:{
+        labels:["2000","2003","2006","2009","2012","2015","2018","2021","2024","2030p"],
+        datasets:[
+          {label:"Coal", data:[38,39,40,40,39,38,36,34,32,26], borderColor:"#6b6f6c", backgroundColor:"#6b6f6c", fill:true, pointRadius:0, tension:.3, borderWidth:1.5},
+          {label:"Gas", data:[18,19,20,21,22,22,23,23,22,20], borderColor:"#9aa29c", backgroundColor:"#9aa29c", fill:true, pointRadius:0, tension:.3, borderWidth:1.5},
+          {label:"Hydro", data:[17,16,16,16,16,16,16,15,14,13], borderColor:"#4f7f9c", backgroundColor:"#4f7f9c", fill:true, pointRadius:0, tension:.3, borderWidth:1.5},
+          {label:"Nuclear", data:[17,16,14,13,11,10,10,9,9,9], borderColor:"#7d5ba6", backgroundColor:"#7d5ba6", fill:true, pointRadius:0, tension:.3, borderWidth:1.5},
+          {label:"Wind + solar", data:[0.4,0.6,1.2,2.0,3.4,5.5,8.0,10.5,14.5,27], borderColor:GREEN2, backgroundColor:"rgba(29,106,79,.25)", fill:true, pointRadius:0, tension:.3, borderWidth:2},
+          {label:"Other", data:[9.6,9.4,8.8,8.0,8.6,8.5,7.0,8.1,8.5,5], borderColor:"#c9b458", backgroundColor:"#c9b458", fill:true, pointRadius:0, tension:.3, borderWidth:1.5}
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{position:"top",labels:{boxWidth:12,boxHeight:12,usePointStyle:true,padding:14,font:{size:10}}},
+          tooltip:{mode:"index",intersect:false}
+        },
+        scales:{
+          x:{grid:{display:false},ticks:{color:"#5f6b63"}},
+          y:{stacked:true,grid:grid(),beginAtZero:true,max:100,ticks:{color:"#5f6b63",callback:function(v){return v+"%";}}}
+        }
+      }
+    });
+  })();
+
+  /* ---------- Fig 5: emissions ---------- */
+  (function(){
+    var ctx = document.getElementById("emissChart");
+    if (!ctx || typeof Chart === "undefined") return;
+    new Chart(ctx, {
+      type:"line",
+      data:{
+        labels:["2010","2012","2014","2016","2018","2020","2022","2024","2026","2028","2030"],
+        datasets:[
+          {label:"Historical", data:[30.4,31.4,32.3,32.2,33.6,31.5,36.0,37.8,null,null,null], borderColor:GREEN, backgroundColor:GREEN, borderWidth:2.5, pointRadius:0, pointHitRadius:8, tension:.3, spanGaps:false},
+          {label:"Current policy", data:[null,null,null,null,null,null,null,37.8,36.8,35.4,34.0], borderColor:GOLD, backgroundColor:GOLD, borderWidth:2, pointRadius:0, pointHitRadius:8, tension:.3},
+          {label:"1.5°C corridor", data:[null,null,null,null,null,null,null,37.8,33.5,28.0,22.0], borderColor:"#c0392b", backgroundColor:"#c0392b", borderWidth:2, borderDash:[6,4], pointRadius:0, pointHitRadius:8, tension:.3}
+        ]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{position:"top",labels:{boxWidth:12,boxHeight:12,usePointStyle:true,padding:14,font:{size:10}}},
+          tooltip:{callbacks:{label:function(c){return c.dataset.label+": "+c.parsed.y+" Gt";}}}
+        },
+        scales:{
+          x:{grid:{display:false},ticks:{color:"#5f6b63"}},
+          y:{grid:grid(),beginAtZero:false,min:15,max:40,ticks:{color:"#5f6b63",callback:function(v){return v+" Gt";}}}
+        }
+      }
+    });
+  })();
+
+  /* ---------- progress bar + back to top ---------- */
+  var bar=document.getElementById("progress"), top=document.getElementById("backtop");
+  function onScroll(){
+    var h=document.documentElement, sc=h.scrollTop||document.body.scrollTop;
+    var max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0?(sc/max)*100:0)+"%";
+    if(top){ if(sc>800){top.classList.add("show");}else{top.classList.remove("show");} }
+  }
+  document.addEventListener("scroll",onScroll,{passive:true}); onScroll();
+
+  /* ---------- scrollspy ---------- */
+  var navLinks=[].slice.call(document.querySelectorAll(".nav a"));
+  var secs=navLinks.map(function(a){return document.querySelector(a.getAttribute("href"));});
+  function spy(){
+    var pos=(document.documentElement.scrollTop||document.body.scrollTop)+120;
+    var idx=0;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=pos){idx=i;} });
+    navLinks.forEach(function(a,i){ a.classList.toggle("active",i===idx); });
+  }
+  document.addEventListener("scroll",spy,{passive:true}); spy();
+
+  /* ---------- reveal ---------- */
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("visible"); io.unobserve(e.target); } });
+    },{threshold:.06});
+    [].slice.call(document.querySelectorAll(".reveal")).forEach(function(el){ io.observe(el); });
+  }else{
+    [].slice.call(document.querySelectorAll(".reveal")).forEach(function(el){ el.classList.add("visible"); });
+  }
+})();
+</script>
+</body>
+</html>
